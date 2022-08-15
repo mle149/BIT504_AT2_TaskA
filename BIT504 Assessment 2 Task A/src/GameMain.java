@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.JFrame;
 
 
 
@@ -26,7 +27,7 @@ public class GameMain extends JPanel implements MouseListener{
 	// the game board 
 	private Board board;
 	 	 
-	//TODO: create the enumeration for the variable below (GameState currentState)
+	//TODO: *DONE* create the enumeration for the variable below (GameState currentState)
 	//HINT all of the states you require are shown in the code within GameMain
 	private GameState currentState; 
 	
@@ -39,8 +40,8 @@ public class GameMain extends JPanel implements MouseListener{
 	/** Constructor to setup the UI and game components on the panel */
 	public GameMain() {   
 		
-		// TODO: This JPanel fires a MouseEvent on MouseClicked so add required event listener to 'this'.          
-	    
+		// TODO: *DONE* This JPanel fires a MouseEvent on MouseClicked so add required event listener to 'this'.          
+	    addMouseListener(this);
 	    
 		// Setup the status bar (JLabel) to display status message       
 		statusBar = new JLabel("         ");       
@@ -56,13 +57,14 @@ public class GameMain extends JPanel implements MouseListener{
 		setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT + 30));
 		
 		
-		// TODO: Create a new instance of the game "Board"class. HINT check the variables above for the correct name
-
+		// TODO: *DONE* Create a new instance of the game "Board"class. HINT check the variables above for the correct name
+		board = new Board();
 		
-		//TODO: call the method to initialise the game board
-
+		//TODO: *DONE* call the method to initialise the game board
+		initGame();
 	}
 	
+	/** MAIN METHOD **/
 	public static void main(String[] args) {
 		    // Run GUI code in Event Dispatch thread for thread safety.
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -70,16 +72,18 @@ public class GameMain extends JPanel implements MouseListener{
 				//create a main window to contain the panel
 				JFrame frame = new JFrame(TITLE);
 				
-				//TODO: create the new GameMain panel and add it to the frame
-						
+				//TODO: *DONE* create the new GameMain panel and add it to the frame
+				GameMain panel = new GameMain();
+				frame.add(panel);
 				
 				
 				//TODO: set the default close operation of the frame to exit_on_close
 		            
-				
+				frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 				frame.pack();             
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
+				
 	         }
 		 });
 	}
@@ -96,13 +100,13 @@ public class GameMain extends JPanel implements MouseListener{
 			statusBar.setForeground(Color.BLACK);          
 			if (currentPlayer == Player.Cross) {   
 			
-				//TODO: use the status bar to display the message "X"'s Turn
-
+				//TODO: *DONE* use the status bar to display the message "X"'s Turn
+				statusBar.setText("X's turn");
 				
 			} else {    
 				
-				//TODO: use the status bar to display the message "O"'s Turn
-
+				//TODO: *DONE* use the status bar to display the message "O"'s Turn
+				statusBar.setText("O's turn");
 				
 			}       
 			} else if (currentState == GameState.Draw) {          
@@ -140,14 +144,19 @@ public class GameMain extends JPanel implements MouseListener{
 			//check for win after play
 			if(board.hasWon(thePlayer, row, col)) {
 				
-				// TODO: check which player has won and update the currentstate to the appropriate gamestate for the winner
-
+				// TODO: *DONE* check which player has won and update the currentstate to the appropriate gamestate for the winner
+				if(thePlayer == Player.Cross) {
+					currentState = GameState.Cross_won;
+				}
+				else if(thePlayer == Player.Nought) {
+					currentState = GameState.Nought_won;
+				}
 				
 			} else 
 				if (board.isDraw ()) {
 					
-				// TODO: set the currentstate to the draw gamestate
-
+				// TODO: *DONE* set the currentstate to the draw gamestate
+					currentState = GameState.Draw;
 			}
 			//otherwise no change to current state of playing
 		}
@@ -184,8 +193,8 @@ public class GameMain extends JPanel implements MouseListener{
 			initGame();            
 		}   
 		
-		//TODO: redraw the graphics on the UI          
-           
+		//TODO: *DONE* redraw the graphics on the UI          
+        repaint();   
 	}
 		
 	
