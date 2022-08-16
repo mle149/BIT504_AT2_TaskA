@@ -29,21 +29,15 @@ public class Board {
 		// TODO: *NEED TO TEST* Check whether the game has ended in a draw. 
 		// Hint: Use a nested loop (see the constructor for an example). Check whether any of the cells content in the board grid are Player.Empty. If they are, it is not a draw.
 		// Hint: Return false if it is not a draw, return true if there are no empty positions left
-		boolean isDraw = false;
 
-		
-		for(int i=0; i<GameMain.ROWS; ++i) {
-			for(int j=0; j < GameMain.COLS; ++j) {
-				if(cells[i][j].content == Player.Empty) {
-					break;
-				}
-				else if(cells[i][j].content == Player.Cross || cells[i][j].content == Player.Nought){
-					isDraw();
+		for(int row=0; row<3; row++) {
+			for(int column=0; column<3; column++) {
+				if(cells[row][column].content == Player.Empty) {
+					return false;
 				}
 			}
 		}
-		return isDraw;
-	
+		return false;
 	}
 	
 	/** Return true if the current player "thePlayer" has won after making their move  */
